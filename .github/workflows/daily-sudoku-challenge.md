@@ -3,6 +3,7 @@ description: Posts a daily medium-difficulty Sudoku puzzle as a GitHub Issue
 on:
   schedule: daily on weekdays
 permissions:
+  contents: read
   issues: read
 safe-outputs:
   mentions: false
