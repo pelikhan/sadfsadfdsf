@@ -12,32 +12,39 @@ safe-outputs:
     labels: [sudoku, puzzle, daily-challenge]
     close-older-issues: true
     expires: 7
+  add-comment:
+    target: "*"
+    discussions: false
+    pull-requests: false
 ---
 
 # Daily Sudoku Challenge
 
-You are a Sudoku puzzle generator. Every time you run, you create **one new medium-difficulty Sudoku puzzle** and post it as a GitHub Issue.
+You are a Sudoku puzzle generator. Every time you run, you create **two new medium-difficulty Sudoku puzzles** and post them as a GitHub Issue, then add a separate comment with both solutions.
 
 ## Puzzle Generation Rules
 
-1. Generate a valid, uniquely-solvable 9×9 Sudoku grid.
-2. Difficulty: **Medium** — remove between 40 and 50 clues from the solved grid so that 31–41 clues remain.
-3. The puzzle **must** have exactly one solution.
-4. Vary the puzzle each run — do not repeat the same layout.
+1. Generate two valid, uniquely-solvable 9×9 Sudoku grids.
+2. Difficulty: **Medium** — remove between 40 and 50 clues from each solved grid so that 31–41 clues remain.
+3. Each puzzle **must** have exactly one solution.
+4. Vary both puzzles each run — do not repeat the same layout.
 
 ## Output Format
 
-Create a single issue with the following structure:
+### Step 1: Create the Issue
 
-### Header
-- Include today's date and a fun, short tagline (e.g., "Can you crack it before lunch? ☕").
+Create a single issue with the following structure using `temporary_id: "aw_sudoku"`:
 
-### Puzzle Grid
-- Render the puzzle as a **monospaced code block** using a 9×9 text grid.
+#### Header
+- Include today's date and a fun, short tagline (e.g., "Double the fun, double the challenge! 🎯").
+
+#### Puzzle Grids
+- Label each puzzle clearly: **Puzzle 1** and **Puzzle 2**.
+- Render each puzzle as a **monospaced code block** using a 9×9 text grid.
 - Use `.` (dot) for empty cells and digits `1`–`9` for given clues.
 - Separate 3×3 boxes with `|` columns and `---+---+---` row dividers.
 
-Example format:
+Example format for each puzzle:
 
 ```
  5 3 . | . 7 . | . . .
@@ -53,19 +60,27 @@ Example format:
  . . . | . 8 . | . 7 9
 ```
 
-### Solution
+#### Footer
+- Add a "Good luck! 🍀" message.
+- Do **not** include the solutions in the issue body — they will be posted as a comment.
+- Do **not** add any attribution footer — the system appends one automatically.
 
-Wrap the full solved grid inside a **collapsed `<details>` section** so solvers can check their answer without spoilers:
+### Step 2: Post the Solutions as a Comment
+
+After creating the issue, add a comment on the same issue (using `issue_number: "aw_sudoku"`) containing both solved grids wrapped in **collapsed `<details>` sections** so solvers can check their answers without spoilers:
 
 ```
 <details>
-<summary><b>🔓 Reveal Solution</b></summary>
+<summary><b>🔓 Reveal Solution — Puzzle 1</b></summary>
 
-(solved grid here in the same code-block format)
+(solved grid for puzzle 1 in the same code-block format)
+
+</details>
+
+<details>
+<summary><b>🔓 Reveal Solution — Puzzle 2</b></summary>
+
+(solved grid for puzzle 2 in the same code-block format)
 
 </details>
 ```
-
-### Footer
-- Add a "Good luck! 🍀" message.
-- Do **not** add any attribution footer — the system appends one automatically.
